@@ -4,7 +4,6 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
 import { Admin } from '@/models/Admin';
 
-const adminEmails = ['realbcole@gmail.com'];
 async function isAdminEmail(email) {
   return !!(await Admin.findOne({ email }));
 }
