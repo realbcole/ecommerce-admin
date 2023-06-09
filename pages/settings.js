@@ -8,6 +8,7 @@ const SettingsPage = ({ swal }) => {
   const [products, setProducts] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState('');
   const [shippingFee, setShippingFee] = useState(0);
+  const [shopName, setShopName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -37,6 +38,10 @@ const SettingsPage = ({ swal }) => {
       name: 'shippingFee',
       value: shippingFee,
     });
+    await axios.put('/api/settings', {
+      name: 'shopName',
+      value: shopName,
+    });
     setIsLoading(false);
     await swal.fire({
       title: 'Settings saved!',
@@ -53,6 +58,12 @@ const SettingsPage = ({ swal }) => {
         </div>
       ) : (
         <>
+          <label>Shop Name</label>
+          <input
+            type="text"
+            value={shopName}
+            onChange={(e) => setShopName(e.target.value)}
+          />
           <label className="mt-4">Featured Product</label>
           <select
             className=""
