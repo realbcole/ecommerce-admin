@@ -6,7 +6,7 @@ import Image from 'next/image';
 const HomeHeader = () => {
   const { data: session } = useSession();
   return (
-    <div className="text-blue-900 flex justify-between">
+    <div className="text-primaryDark flex justify-between">
       <h2>
         Hello, <b>{session?.user?.name}</b>
       </h2>

@@ -5,11 +5,11 @@ import { subHours } from 'date-fns';
 
 const Tile = ({ title, stat, dollars = false }) => {
   return (
-    <div className="shadow-md p-4">
-      <h3 className="text-grayPreset uppercase font-bold text-xs text-center">
+    <div className="shadow-md p-4 bg-secondaryBg">
+      <h3 className="text-primaryDark uppercase font-bold text-xs text-center">
         {title}
       </h3>
-      <div className="text-3xl text-center p-2 text-primary font-bold">
+      <div className="text-3xl text-center p-2 text-secondary font-bold">
         {dollars && '$'}
         {stat}
       </div>

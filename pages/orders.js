@@ -35,7 +35,10 @@ const OrdersPage = () => {
           <tbody>
             {orders.length > 0 &&
               orders.map((order) => (
-                <tr key={order._id} className="text-center">
+                <tr
+                  key={order._id}
+                  className="text-center border border-primaryDark"
+                >
                   <td>{new Date(order.createdAt).toLocaleString()}</td>
                   <td>{order.paid ? 'YES' : 'NO'}</td>
                   <td>

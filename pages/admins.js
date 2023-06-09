@@ -89,17 +89,22 @@ const AdminsPage = ({ swal }) => {
       ) : (
         <table className="basic mt-4">
           <thead>
-            <tr>
-              <th className="text-left">Existing Admins</th>
+            <tr className="text-center">
+              <th>Existing Admins</th>
+              <th>Added</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {adminEmails.length > 0 &&
               adminEmails.map((admin) => (
-                <tr key={admin._id}>
+                <tr
+                  key={admin._id}
+                  className="border border-primaryDark text-center"
+                >
                   <td>{admin.email}</td>
                   <td>{admin.createdAt && formatDate(admin.createdAt)}</td>
-                  <td>
+                  <td className="flex justify-end">
                     <button
                       className="btn-primary"
                       onClick={() => deleteAdmin(admin)}

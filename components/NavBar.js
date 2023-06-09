@@ -6,7 +6,8 @@ import Logo from './Logo';
 
 const NavBar = ({ show }) => {
   const inactiveLink = 'flex gap-1 p-1';
-  const activeLink = inactiveLink + ' bg-white text-primary rounded-l-lg';
+  const activeLink =
+    inactiveLink + ' bg-primaryBg text-primaryDark rounded-l-lg';
 
   const router = useRouter();
   const { pathname } = router;
@@ -20,9 +21,9 @@ const NavBar = ({ show }) => {
     <aside
       className={`${
         show ? 'left-0' : '-left-full'
-      } text-white p-4 fixed w-full bg-primary h-full md:static md:w-auto transition-all`}
+      } text-primaryBg py-4 pl-4 fixed w-full bg-primaryDark h-full md:static md:w-auto transition-all`}
     >
-      <div className="mb-4 hidden md:block">
+      <div className="mb-4 hidden md:block pr-4">
         <Logo />
       </div>
 

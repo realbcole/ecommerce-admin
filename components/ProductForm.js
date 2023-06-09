@@ -168,7 +168,7 @@ const ProductForm = ({
             <Spinner className="mx-auto" />
           </div>
         )}
-        <label className="w-32 h-32 border flex items-center justify-center rounded-lg bg-gray-100 cursor-pointer">
+        <label className="w-32 h-32 flex items-center justify-center rounded-lg bg-extraDetails cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -207,7 +207,7 @@ const Categories = ({ swal }) => {
           {!editedCategory && (
             <table className="basic mt-4">
               <thead>
-                <tr>
+                <tr className="text-center">
                   <td>Category Name</td>
                   <td>Parent Category</td>
                   <td></td>
@@ -216,10 +216,13 @@ const Categories = ({ swal }) => {
               <tbody>
                 {categories.length > 0 &&
                   categories.map((category) => (
-                    <tr key={category._id}>
+                    <tr
+                      key={category._id}
+                      className="border border-primaryDark text-center"
+                    >
                       <td>{category.name}</td>
                       <td>{category?.parent?.name}</td>
-                      <td className="flex">
+                      <td className="flex justify-end">
                         <button
                           onClick={() => editCategory(category)}
                           className="btn-primary mr-1 flex items-center"

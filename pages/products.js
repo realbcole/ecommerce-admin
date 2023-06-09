@@ -3,17 +3,43 @@ import Spinner from '@/components/Spinner';
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { withSwal } from 'react-sweetalert2';
 
-const Products = () => {
+const Products = ({ swal }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  async function fetchProducts() {
     setLoading(true);
     axios.get('/api/products').then((reponse) => {
       setProducts(reponse.data);
       setLoading(false);
     });
-  }, []);
+  }
+
+  function deleteProduct(product) {
+    swal
+      .fire({
+        title: 'Are you sure?',
+        text: `Do you want to delete ${product.title}?`,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, Delete!',
+        confirmButtonColor: '#d55',
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const { _id } = product;
+          await axios.delete(`/api/products?id=${_id}`);
+          fetchProducts();
+        }
+      });
+  }
+
   return (
     <Layout>
       <Link href={'/products/new'} className="btn-primary">
@@ -24,19 +50,27 @@ const Products = () => {
           <Spinner />
         </div>
       ) : (
-        <table className="basic mt-4">
+        <table className="basic mt-4 border border-primaryDark">
           <thead>
-            <tr>
+            <tr className="text-center">
               <td>Product name</td>
+              <td>Category</td>
               <td></td>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product.title}</td>
-                <td>
-                  <Link href={`/products/edit/${product._id}`}>
+              <tr
+                key={product._id}
+                className="border border-primaryDark text-center"
+              >
+                <td className="">{product.title}</td>
+                <td>{product?.category?.name}</td>
+                <td className="flex justify-end">
+                  <button
+                    className="btn-primary flex items-center mr-1"
+                    href={`/products/edit/${product._id}`}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -52,8 +86,11 @@ const Products = () => {
                       />
                     </svg>
                     Edit
-                  </Link>
-                  <Link href={`/products/delete/${product._id}`}>
+                  </button>
+                  <button
+                    className="btn-primary flex items-center"
+                    onClick={() => deleteProduct(product)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -69,7 +106,7 @@ const Products = () => {
                       />
                     </svg>
                     Delete
-                  </Link>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -80,4 +117,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default withSwal(({ swal }) => <Products swal={swal} />);

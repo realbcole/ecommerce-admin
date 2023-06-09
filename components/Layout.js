@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   const { data: session } = useSession();
   if (!session) {
     return (
-      <div className="bg-primary w-screen h-screen flex items-center">
+      <div className="bg-primaryDark w-screen h-screen flex items-center">
         <div className="text-center w-full">
           <button
             onClick={() => signIn('google')}
@@ -23,8 +23,8 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div className="bg-primary min-h-screen">
-      <div className="md:hidden flex items-center p-4 text-white">
+    <div className="bg-primaryDark min-h-screen">
+      <div className="md:hidden flex items-center p-4 text-secondaryBg">
         <button onClick={() => setShowNavBar(!showNavBar)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export default function Layout({ children }) {
 
       <div className="flex">
         <NavBar show={showNavBar} />
-        <div className="bg-white flex-grow rounded-md p-4 h-screen md:my-2 md:mr-2">
+        <div className="bg-primaryBg flex-grow rounded-md p-4 h-screen md:my-2 md:mr-2">
           {children}
         </div>
       </div>
