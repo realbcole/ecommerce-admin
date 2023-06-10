@@ -11,6 +11,7 @@ export default async function handle(req, res) {
 
   const bucketName = process.env.S3_BUCKET_NAME;
 
+  // Get files from request
   const form = new multiparty.Form();
   const { files } = await new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
@@ -18,6 +19,8 @@ export default async function handle(req, res) {
       resolve({ fields, files });
     });
   });
+
+  // Create S3 client
   const client = new S3Client({
     region: 'us-east-2',
     credentials: {
@@ -25,6 +28,8 @@ export default async function handle(req, res) {
       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     },
   });
+
+  // Upload each file
   const links = [];
   for (const file of files.file) {
     const ext = file.originalFilename.split('.').pop();
@@ -41,6 +46,8 @@ export default async function handle(req, res) {
     const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
     links.push(link);
   }
+
+  // Return links
   return res.json({ links });
 }
 
