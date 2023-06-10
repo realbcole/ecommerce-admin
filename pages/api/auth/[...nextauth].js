@@ -2,13 +2,8 @@ import NextAuth, { getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
-import { Admin } from '@/models/Admin';
 import { mongooseConnect } from '@/lib/mongoose';
-
-async function isAdminEmail(email) {
-  await mongooseConnect();
-  return !!(await Admin.findOne({ email }));
-}
+import { Admin } from '@/models/Admin';
 
 export const authOptions = {
   secret: process.env.SECRET,
@@ -31,13 +26,20 @@ export const authOptions = {
   },
 };
 
-export default NextAuth(authOptions);
-
-export const isAdminRequest = async (req, res) => {
+// Checks if user is an admin, if not, throws an error
+export async function isAdminRequest(req, res) {
   const session = await getServerSession(req, res, authOptions);
   if (!(await isAdminEmail(session?.user?.email))) {
     res.status(401);
     res.end();
     throw 'not an admin';
   }
-};
+}
+
+// Checks if an email is an admin email
+async function isAdminEmail(email) {
+  await mongooseConnect();
+  return !!(await Admin.findOne({ email }));
+}
+
+export default NextAuth(authOptions);

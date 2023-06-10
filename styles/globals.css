@@ -5,44 +5,47 @@
 input,
 textarea,
 select {
-  @apply border-2 border-primaryDark/50 bg-extraDetails rounded-lg px-1 mb-2 w-full placeholder:text-primaryDark/50;
+  @apply border border-primaryDark bg-secondaryBg rounded-lg px-1 mb-2 w-full placeholder:text-primaryDark/50;
 }
+
 input:focus,
 textarea:focus,
 select:focus {
   @apply border-secondary;
 }
+
 label {
-  @apply text-primaryDark;
+  @apply text-primaryDark font-semibold;
 }
-.btn-primary {
-  @apply bg-secondary text-secondaryBg px-4 py-2 rounded-lg;
-}
+
 table.basic {
   @apply w-full bg-extraDetails;
 }
+
 table.basic tr td {
   @apply p-1;
 }
+
 table.basic thead {
   @apply bg-primaryDark text-secondaryBg;
 }
+
 table.basic a {
   @apply bg-secondary text-secondaryBg text-sm p-1 rounded-md px-2 inline-flex gap-1 mx-1;
 }
+
 h1 {
   @apply text-3xl font-bold text-primaryDark;
 }
-.btn-red {
-  @apply bg-red-800;
-}
-.btn-default {
-  @apply bg-primaryDark;
-}
-.btn-red,
-.btn-default {
-  @apply text-secondaryBg px-4 py-2 rounded-lg;
-}
+
 h2 {
   @apply font-semibold mt-2;
+}
+
+.btn-primary {
+  @apply bg-secondary text-secondaryBg px-4 py-2 rounded-lg;
+}
+
+.btn-default {
+  @apply bg-primaryDark text-secondaryBg px-4 py-2 rounded-lg;
 }

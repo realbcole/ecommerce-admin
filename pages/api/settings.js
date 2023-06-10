@@ -6,20 +6,28 @@ export default async function handler(req, res) {
   await mongooseConnect();
   await isAdminRequest(req, res);
 
+  // Update settings
   if (req.method === 'PUT') {
     const { name, value } = req.body;
+
+    // Check if settings already exists
     let settingsDoc = await Settings.findOne({ name });
+
+    // If exists, update
     if (settingsDoc) {
       settingsDoc.value = value;
       await settingsDoc.save();
-    } else {
+    }
+    // If not, create
+    else {
       settingsDoc = await Settings.create({ name, value });
     }
+
     res.json(settingsDoc);
   }
 
+  // Get settings
   if (req.method === 'GET') {
-    const { name } = req.query;
-    res.json(await Settings.findOne({ name }));
+    res.json(await Settings.findOne({ name: req.query.name }));
   }
 }

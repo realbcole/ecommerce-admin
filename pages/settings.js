@@ -1,9 +1,10 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { withSwal } from 'react-sweetalert2';
 import Layout from '@/components/Layout';
 import Spinner from '@/components/Spinner';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { withSwal } from 'react-sweetalert2';
 
+// Settings Page
 const SettingsPage = ({ swal }) => {
   const [products, setProducts] = useState([]);
   const [featuredProduct, setFeaturedProduct] = useState('');
@@ -11,6 +12,7 @@ const SettingsPage = ({ swal }) => {
   const [shopName, setShopName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // On start, load settings
   useEffect(() => {
     setIsLoading(true);
     loadSettings().then(() => setIsLoading(false));
@@ -45,7 +47,10 @@ const SettingsPage = ({ swal }) => {
     setIsLoading(false);
     await swal.fire({
       title: 'Settings saved!',
+      confirmButtonColor: '#293241',
       icon: 'success',
+      iconColor: '#293241',
+      background: '#E0FBFC',
     });
   }
 
@@ -53,17 +58,17 @@ const SettingsPage = ({ swal }) => {
     <Layout>
       <h1>Settings</h1>
       {isLoading ? (
-        <div className="mt-12 flex justify-center items-center">
-          <Spinner />
-        </div>
+        <Spinner className="mt-12" />
       ) : (
         <>
           <label>Shop Name</label>
+          {/* Shop name input */}
           <input
             type="text"
             value={shopName}
             onChange={(e) => setShopName(e.target.value)}
           />
+          {/* Featured product select */}
           <label className="mt-4">Featured Product</label>
           <select
             className=""
@@ -76,12 +81,14 @@ const SettingsPage = ({ swal }) => {
               </option>
             ))}
           </select>
+          {/* Shipping fee input */}
           <label>Shipping fee (USD)</label>
           <input
             type="number"
             value={shippingFee}
             onChange={(e) => setShippingFee(e.target.value)}
           />
+          {/* Save button */}
           <button className="btn-primary" onClick={saveSettings}>
             Save
           </button>

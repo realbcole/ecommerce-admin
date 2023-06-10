@@ -1,10 +1,13 @@
-import Layout from '@/components/Layout';
-import Stats from '@/components/Stats';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Layout from '@/components/Layout';
+import Stats from '@/components/Stats';
 
+// Home page header
+// Says hello to the user and shows their name and profile pic on the right side
 const HomeHeader = () => {
   const { data: session } = useSession();
+
   return (
     <div className="text-primaryDark flex justify-between">
       <h2>
@@ -26,7 +29,8 @@ const HomeHeader = () => {
   );
 };
 
-export default function Home() {
+// Home page
+export default function HomePage() {
   return (
     <Layout>
       <HomeHeader />

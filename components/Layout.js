@@ -1,19 +1,26 @@
-import NavBar from '@/components/NavBar';
-import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
+import { useSession, signIn } from 'next-auth/react';
+import NavBar from './NavBar';
 import Logo from './Logo';
+import MenuIcon from './icons/MenuIcon';
 
+// Layout component
+// Seperates the navbar from the rest of the page
 export default function Layout({ children }) {
+  // State for showing the navbar on mobile
   const [showNavBar, setShowNavBar] = useState(false);
 
+  // Get the session
   const { data: session } = useSession();
+
+  // If there is no session, show a login button
   if (!session) {
     return (
       <div className="bg-primaryDark w-screen h-screen flex items-center">
         <div className="text-center w-full">
           <button
             onClick={() => signIn('google')}
-            className="bg-white p-2 rounded-lg px-4"
+            className="bg-secondaryBg p-2 text-primaryDark rounded-lg px-4"
           >
             Login with Google
           </button>
@@ -24,31 +31,20 @@ export default function Layout({ children }) {
 
   return (
     <div className="bg-primaryDark min-h-screen">
+      {/* Navbar for mobile screens */}
       <div className="md:hidden flex items-center p-4 text-secondaryBg">
         <button onClick={() => setShowNavBar(!showNavBar)}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
+          <MenuIcon />
         </button>
         <div className="flex grow justify-center mr-6">
           <Logo />
         </div>
       </div>
 
+      {/* Navbar for desktop screens */}
       <div className="flex">
         <NavBar show={showNavBar} />
-        <div className="bg-primaryBg flex-grow rounded-md p-4 h-screen md:my-2 md:mr-2">
+        <div className="bg-primaryBg flex-grow rounded-md p-4 min-h-screen">
           {children}
         </div>
       </div>

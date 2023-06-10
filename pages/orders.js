@@ -1,12 +1,14 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Layout from '@/components/Layout';
 import Spinner from '@/components/Spinner';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 
+// Orders Page
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // On start, get all orders
   useEffect(() => {
     setLoading(true);
     axios.get('/api/orders').then((response) => {
@@ -19,9 +21,7 @@ const OrdersPage = () => {
     <Layout>
       <h1>Orders</h1>
       {loading ? (
-        <div className="flex items-center justify-center mt-16">
-          <Spinner />
-        </div>
+        <Spinner className="mt-16" />
       ) : (
         <table className="basic">
           <thead>

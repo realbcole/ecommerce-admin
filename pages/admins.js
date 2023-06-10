@@ -1,23 +1,41 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { withSwal } from 'react-sweetalert2';
+import { formatDate } from '@/lib/formatDate';
 import Layout from '@/components/Layout';
 import Spinner from '@/components/Spinner';
-import { formatDate } from '@/lib/formatDate';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { withSwal } from 'react-sweetalert2';
 
+// Admins Page
+// Allows user to add and delete admins
 const AdminsPage = ({ swal }) => {
   const [email, setEmail] = useState('');
   const [adminEmails, setAdminEmails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // On start, load admins
+  useEffect(() => {
+    loadAdmins();
+  }, []);
+
+  function loadAdmins() {
+    setIsLoading(true);
+    axios.get('/api/admins').then((response) => {
+      setAdminEmails(response.data);
+      setIsLoading(false);
+    });
+  }
+
   async function addAdmin(e) {
     e.preventDefault();
     await axios
       .post('/api/admins', { email })
-      .then((response) => {
+      .then(() => {
         swal.fire({
           title: 'Admin created!',
           icon: 'success',
+          background: '#E0FBFC',
+          confirmButtonColor: '#293241',
+          iconColor: '#293241',
         });
         setEmail('');
         loadAdmins();
@@ -27,16 +45,11 @@ const AdminsPage = ({ swal }) => {
           title: 'Admin not created!',
           text: err.response.data.message,
           icon: 'error',
+          background: '#E0FBFC',
+          confirmButtonColor: '#293241',
+          iconColor: '#293241',
         });
       });
-  }
-
-  function loadAdmins() {
-    setIsLoading(true);
-    axios.get('/api/admins').then((response) => {
-      setAdminEmails(response.data);
-      setIsLoading(false);
-    });
   }
 
   function deleteAdmin(admin) {
@@ -47,7 +60,9 @@ const AdminsPage = ({ swal }) => {
         showCancelButton: true,
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Yes, Delete!',
-        confirmButtonColor: '#d55',
+        confirmButtonColor: '#293241',
+        background: '#E0FBFC',
+        iconColor: '#293241',
         reverseButtons: true,
       })
       .then(async (result) => {
@@ -59,10 +74,6 @@ const AdminsPage = ({ swal }) => {
       });
   }
 
-  useEffect(() => {
-    loadAdmins();
-  }, []);
-
   return (
     <Layout>
       <h1>Admins</h1>
@@ -71,6 +82,7 @@ const AdminsPage = ({ swal }) => {
         className="flex gap-2 justify-center items-center"
         onSubmit={addAdmin}
       >
+        {/* Email input */}
         <input
           type="text"
           placeholder="Email"
@@ -82,10 +94,9 @@ const AdminsPage = ({ swal }) => {
           Add
         </button>
       </form>
+      {/* Admins table */}
       {isLoading ? (
-        <div className="flex justify-center items-center mt-8">
-          <Spinner />
-        </div>
+        <Spinner className="mt-8" />
       ) : (
         <table className="basic mt-4">
           <thead>

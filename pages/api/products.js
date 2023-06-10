@@ -2,23 +2,15 @@ import { Product } from '@/models/Product';
 import { mongooseConnect } from '@/lib/mongoose';
 import { isAdminRequest } from './auth/[...nextauth]';
 
-export default async function handle(req, res) {
-  const { method } = req;
+export default async function handler(req, res) {
   await mongooseConnect();
   await isAdminRequest(req, res);
 
-  if (method === 'GET') {
-    if (req.query?.id) {
-      res.json(await Product.findOne({ _id: req.query.id }));
-    } else {
-      res.json(await Product.find());
-    }
-  }
-
-  if (method === 'POST') {
-    // Process a POST request
+  // Add product
+  if (req.method === 'POST') {
     const { title, description, price, images, category, properties } =
       req.body;
+
     const productDoc = await Product.create({
       title,
       description,
@@ -27,23 +19,38 @@ export default async function handle(req, res) {
       category,
       properties,
     });
+
     res.json(productDoc);
   }
 
-  if (method === 'PUT') {
+  // Update product
+  if (req.method === 'PUT') {
     const { title, description, price, images, category, properties, _id } =
       req.body;
+
     await Product.updateOne(
       { _id },
       { title, description, price, images, category, properties }
     );
+
     res.json(true);
   }
 
-  if (method === 'DELETE') {
+  // Get products
+  if (req.method === 'GET') {
+    // If id is provided, get product by id
     if (req.query?.id) {
-      await Product.deleteOne({ _id: req.query.id });
-      res.json(true);
+      res.json(await Product.findOne({ _id: req.query.id }));
     }
+    // Else, get all products
+    else {
+      res.json(await Product.find());
+    }
+  }
+
+  // Delete product
+  if (req.method === 'DELETE') {
+    await Product.deleteOne({ _id: req.query.id });
+    res.json(true);
   }
 }
