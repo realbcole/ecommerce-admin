@@ -12,6 +12,7 @@ export default async function handler(req, res) {
     const { title, description, price, images, category, properties } =
       req.body;
 
+    // Create the product in database
     const productDoc = await Product.create({
       title,
       description,
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
       stripePriceId: '',
     });
 
-    // Ensure that the id is converted to string, as Stripe expects a string id
+    // Create the product in Stripe
     const product = await stripe.products.create({
       name: title,
       id: productDoc._id.toString(),
@@ -38,7 +39,6 @@ export default async function handler(req, res) {
 
       // update productDoc with stripe product and price id
       productDoc.stripePriceId = stripePrice.id;
-      console.log({ productDoc });
       await productDoc.save();
 
       res.json(productDoc);
