@@ -13,6 +13,10 @@ const SettingsPage = ({ swal }) => {
   const [shopName, setShopName] = useState('');
   const [coupons, setCoupons] = useState({});
   const [couponTypes, setCouponTypes] = useState({});
+  const [couponApplyTo, setCouponApplyTo] = useState({});
+  const [couponProduct, setCouponProduct] = useState({});
+  const [couponCategory, setCouponCategory] = useState({});
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // On start, load settings
@@ -46,6 +50,9 @@ const SettingsPage = ({ swal }) => {
       }
       setCouponTypes(couponTypes);
     });
+    await axios.get(`/api/categories`).then((response) => {
+      setCategories(response.data);
+    });
   }
 
   async function saveSettings() {
@@ -61,10 +68,13 @@ const SettingsPage = ({ swal }) => {
         acc[couponName].currency = 'usd';
       }
 
+      acc[couponName].applyTo = couponApplyTo[couponName] || null;
+      acc[couponName].product = couponProduct[couponName] || null;
+      acc[couponName].category = couponCategory[couponName] || null;
+
       return acc;
     }, {});
 
-    console.log({ processedCoupons });
     await axios.put('/api/settings', {
       name: 'featuredProductId',
       value: featuredProduct,
@@ -98,6 +108,18 @@ const SettingsPage = ({ swal }) => {
     });
     setCouponTypes((prev) => {
       let newCoupon = `newCoupon${Object.keys(prev)?.length || 1}`;
+      return { ...prev, [newCoupon]: '' };
+    });
+    setCouponApplyTo((prev) => {
+      let newCoupon = `newCoupon${Date.now()}`;
+      return { ...prev, [newCoupon]: 'all' };
+    });
+    setCouponProduct((prev) => {
+      let newCoupon = `newCoupon${Date.now()}`;
+      return { ...prev, [newCoupon]: '' };
+    });
+    setCouponCategory((prev) => {
+      let newCoupon = `newCoupon${Date.now()}`;
       return { ...prev, [newCoupon]: '' };
     });
   }
@@ -178,7 +200,6 @@ const SettingsPage = ({ swal }) => {
             onChange={(e) => setShippingFee(e.target.value)}
           />
           {/* Coupons */}
-          {/* TODO: Add option to only apply coupon to certain categories or products */}
           <div className="">
             <label>Coupons</label>
             <button className="btn-default block" onClick={addCoupon}>
@@ -189,7 +210,7 @@ const SettingsPage = ({ swal }) => {
               Object.keys(coupons).map((couponName, index) => (
                 <div key={index}>
                   <h2 className="uppercase flex items-center text-xl mb-2">
-                    New Coupon
+                    Coupon
                     <div className="py-2 px-1">
                       <button
                         onClick={() => removeCoupon(couponName)}
@@ -200,7 +221,7 @@ const SettingsPage = ({ swal }) => {
                     </div>
                   </h2>
                   <div className="flex gap-2">
-                    <label>Name</label>
+                    <label>Code</label>
                     <input
                       type="text"
                       value={couponName.toUpperCase()}
@@ -212,6 +233,68 @@ const SettingsPage = ({ swal }) => {
                       }
                     />
                   </div>
+                  <div className="flex gap-2">
+                    <label className="whitespace-nowrap">Apply To</label>
+                    <select
+                      value={couponApplyTo[couponName] || 'all'}
+                      onChange={(e) => {
+                        setCouponApplyTo((prev) => {
+                          const newCouponApplyTo = { ...prev };
+                          newCouponApplyTo[couponName] = e.target.value;
+                          return newCouponApplyTo;
+                        });
+                      }}
+                    >
+                      <option value="all">All Products</option>
+                      <option value="product">Product</option>
+                      <option value="category">Category</option>
+                    </select>
+                  </div>
+                  {couponApplyTo[couponName] === 'product' && (
+                    <div className="flex gap-2">
+                      <label className="whitespace-nowrap">Product</label>
+                      <select
+                        value={couponProduct[couponName] || ''}
+                        onChange={(e) => {
+                          setCouponProduct((prev) => {
+                            const newCouponProduct = { ...prev };
+                            newCouponProduct[couponName] = e.target.value;
+                            return newCouponProduct;
+                          });
+                        }}
+                      >
+                        <option value="">Select Product</option>
+                        {products.map((product) => (
+                          <option value={product._id} key={product._id}>
+                            {product.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {couponApplyTo[couponName] === 'category' && (
+                    <div className="flex gap-2">
+                      <label className="whitespace-nowrap">Category</label>
+                      <select
+                        value={couponCategory[couponName] || ''}
+                        onChange={(e) => {
+                          setCouponCategory((prev) => {
+                            const newCouponCategory = { ...prev };
+                            newCouponCategory[couponName] = e.target.value;
+                            return newCouponCategory;
+                          });
+                        }}
+                      >
+                        <option value="">Select Category</option>
+                        {categories.map((category) => (
+                          <option value={category._id} key={category._id}>
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
                   <div className="flex gap-2">
                     <label className="whitespace-nowrap">Coupon Type</label>
                     <select
@@ -231,7 +314,6 @@ const SettingsPage = ({ swal }) => {
                   </div>
                   {couponTypes[couponName] && couponTypes[couponName] != '' && (
                     <>
-                      {console.log(coupons[couponName])}
                       {couponTypes[couponName] === 'amountOff' ? (
                         <div className="flex gap-2">
                           <label className="whitespace-nowrap">

@@ -9,6 +9,7 @@ const ProductSchema = new Schema(
     images: [{ type: String }],
     category: { type: CategorySchema, ref: 'Category' },
     properties: { type: Object },
+    stripePriceId: { type: String },
   },
   { timestamps: true }
 );
