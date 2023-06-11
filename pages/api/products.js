@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   // Add product
   if (req.method === 'POST') {
-    const { title, description, price, images, category, properties } =
+    const { title, description, price, images, category, properties, hidden } =
       req.body;
 
     // Create the product in database
@@ -21,6 +21,7 @@ export default async function handler(req, res) {
       category,
       properties,
       stripePriceId: '',
+      hidden,
     });
 
     // Create the product in Stripe
@@ -50,8 +51,16 @@ export default async function handler(req, res) {
 
   // Update product
   if (req.method === 'PUT') {
-    const { title, description, price, images, category, properties, _id } =
-      req.body;
+    const {
+      title,
+      description,
+      price,
+      images,
+      category,
+      properties,
+      hidden,
+      _id,
+    } = req.body;
 
     // Fetch the product from the database
     let productDoc = await Product.findOne({ _id });
@@ -125,7 +134,7 @@ export default async function handler(req, res) {
 
     await Product.updateOne(
       { _id },
-      { title, description, price, images, category, properties }
+      { title, description, price, images, category, properties, hidden }
     );
 
     res.json(true);
@@ -136,6 +145,9 @@ export default async function handler(req, res) {
     // If id is provided, get product by id
     if (req.query?.id) {
       res.json(await Product.findOne({ _id: req.query.id }));
+    } else if (req.query?.ids) {
+      const ids = req.query.ids.split(',');
+      res.json(await Product.find({ _id: { $in: ids } }));
     }
     // Else, get all products
     else {

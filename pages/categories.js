@@ -147,13 +147,23 @@ const CategoriesPage = ({ swal }) => {
         {/* Properties input */}
         <div className="mb-4">
           <label className="block">Properties</label>
-          <button
-            type="button"
-            onClick={addProperty}
-            className="btn-default text-sm mb-2"
-          >
-            Add New Property
-          </button>
+          {name ? (
+            <button
+              type="button"
+              onClick={addProperty}
+              className="btn-default text-sm mb-2"
+            >
+              Add New Property
+            </button>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="btn-default text-sm mb-2 cursor-not-allowed"
+            >
+              Add New Property
+            </button>
+          )}
           {properties.length > 0 &&
             properties.map((property, index) => (
               <div className="flex gap-1 mb-2" key={index}>

@@ -224,7 +224,7 @@ const SettingsPage = ({ swal }) => {
           />
           {/* Featured product select */}
           <label className="mt-4">
-            Featured Product<span className="text-secondary">*</span>
+            <span className="text-secondary">*</span>Featured Product
           </label>
           <select
             className=""
@@ -268,7 +268,7 @@ const SettingsPage = ({ swal }) => {
           </div>
           {/* Shipping fee input */}
           <label>
-            Shipping fee (USD)<span className="text-secondary">*</span>
+            <span className="text-secondary">*</span>Shipping fee (USD)
           </label>
           <input
             type="number"
@@ -302,10 +302,10 @@ const Coupon = ({
   products,
   categories,
 }) => {
-  const labelStyle = 'whitespace-nowrap text-secondaryBg';
+  const labelStyle = 'whitespace-nowrap';
   return (
-    <div className="max-w-md bg-primaryDark rounded-md p-2 mb-2">
-      <h2 className="uppercase flex items-center text-xl m-0 text-secondaryBg">
+    <div className="coupon">
+      <h2 className="uppercase flex items-center text-lg m-0">
         Coupon
         <div className="py-2 px-1">
           {/* Delete coupon button */}
@@ -320,7 +320,7 @@ const Coupon = ({
       <div className="flex gap-2">
         {/* Coupon code input */}
         <label className={labelStyle}>
-          Code<span className="text-secondary">*</span>
+          <span className="text-secondary">*</span>Code
         </label>
         <input
           type="text"
@@ -354,7 +354,7 @@ const Coupon = ({
       {couponApplyTo[couponName] === 'product' && (
         <div className="flex gap-2">
           <label className={labelStyle}>
-            Product<span className="text-secondary">*</span>
+            <span className="text-secondary">*</span>Product
           </label>
           <select
             value={couponProduct[couponName] || ''}
@@ -378,7 +378,7 @@ const Coupon = ({
       {couponApplyTo[couponName] === 'category' && (
         <div className="flex gap-2">
           <label className={labelStyle}>
-            Category<span className="text-secondary">*</span>
+            <span className="text-secondary">*</span>Category
           </label>
           <select
             value={couponCategory[couponName] || ''}
@@ -402,7 +402,7 @@ const Coupon = ({
       {/* Coupon type select */}
       <div className="flex gap-2">
         <label className={labelStyle}>
-          Coupon Type<span className="text-secondary">*</span>
+          <span className="text-secondary">*</span>Coupon Type
         </label>
         <select
           value={couponTypes[couponName] || ''}
@@ -425,8 +425,8 @@ const Coupon = ({
           {couponTypes[couponName] === 'amountOff' ? (
             <div className="flex gap-2">
               <label className={labelStyle}>
-                Amount Off (USD)
                 <span className="text-secondary">*</span>
+                Amount Off (USD)
               </label>
               <input
                 type="number"
@@ -441,8 +441,8 @@ const Coupon = ({
           ) : (
             <div className="flex gap-2">
               <label className={labelStyle}>
-                Percent Off (%)
                 <span className="text-secondary">*</span>
+                Percent Off (%)
               </label>
               <input
                 type="number"

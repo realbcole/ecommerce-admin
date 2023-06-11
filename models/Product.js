@@ -10,6 +10,7 @@ const ProductSchema = new Schema(
     category: { type: CategorySchema, ref: 'Category' },
     properties: { type: Object },
     stripePriceId: { type: String },
+    hidden: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

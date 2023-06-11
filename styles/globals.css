@@ -19,7 +19,7 @@ label {
 }
 
 table.basic {
-  @apply w-full bg-extraDetails;
+  @apply bg-secondaryBg w-full;
 }
 
 table.basic tr td {
@@ -27,7 +27,7 @@ table.basic tr td {
 }
 
 table.basic thead {
-  @apply bg-primaryDark text-secondaryBg;
+  @apply bg-primaryDark text-secondaryBg border border-primaryDark;
 }
 
 table.basic a {
@@ -43,9 +43,18 @@ h2 {
 }
 
 .btn-primary {
-  @apply bg-secondary text-secondaryBg px-4 py-2 rounded-lg;
+  @apply bg-secondary text-secondaryBg px-2 py-1 rounded-lg;
 }
 
 .btn-default {
   @apply bg-primaryDark text-secondaryBg px-4 py-2 rounded-lg;
+}
+
+.coupon {
+  @apply max-w-md bg-secondaryBg rounded-md p-2 mb-2 text-primaryDark;
+}
+
+.coupon input,
+.coupon select {
+  @apply bg-primaryDark text-secondaryBg rounded-md;
 }

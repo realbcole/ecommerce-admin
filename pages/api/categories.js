@@ -39,7 +39,8 @@ export default async function handler(req, res) {
 
   // Delete category
   if (req.method === 'DELETE') {
-    await Category.deleteOne(req.query._id);
+    const id = req.query._id;
+    await Category.deleteOne({ id });
     res.json(true);
   }
 }

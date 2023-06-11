@@ -60,6 +60,7 @@ const ProductsPage = ({ swal }) => {
             <tr className="text-center">
               <td>Product name</td>
               <td>Category</td>
+              <td>Visibility</td>
               <td></td>
             </tr>
           </thead>
@@ -71,9 +72,10 @@ const ProductsPage = ({ swal }) => {
               >
                 <td className="">{product.title}</td>
                 <td>{product?.category?.name}</td>
-                <td className="flex justify-end">
+                <td>{product.hidden ? 'Hidden' : 'Shown'}</td>
+                <td className="flex justify-center flex-wrap gap-1">
                   <Link
-                    className="btn-primary flex items-center mr-1"
+                    className="btn-primary flex items-center"
                     href={`/products/edit/${product._id}`}
                   >
                     <EditIcon />

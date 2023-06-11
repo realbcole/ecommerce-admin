@@ -5,6 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Spinner from './Spinner';
 import UploadIcon from './icons/UploadIcon';
+import DeleteIcon from './icons/DeleteIcon';
 
 // Product Form component
 // For creating and editing products
@@ -16,6 +17,7 @@ const ProductForm = ({
   images: existingImages,
   category: existingCategory,
   properties: existingProperties,
+  hidden: existingHidden,
 }) => {
   const [title, setTitle] = React.useState(existingTitle || '');
   const [description, setDescription] = React.useState(
@@ -30,6 +32,7 @@ const ProductForm = ({
   const [productProperties, setProductProperties] = useState(
     existingProperties || {}
   );
+  const [hidden, setHidden] = useState(existingHidden || false);
   const [isUploading, setIsUploading] = useState(false);
 
   const router = useRouter();
@@ -50,6 +53,7 @@ const ProductForm = ({
       images,
       category,
       properties: productProperties,
+      hidden,
     };
     if (_id) {
       //update product
@@ -78,6 +82,12 @@ const ProductForm = ({
 
   function updateImagesOrder(newImages) {
     setImages(newImages);
+  }
+
+  function deleteImage(link) {
+    setImages((oldImages) => {
+      return oldImages.filter((image) => image !== link);
+    });
   }
 
   function setProductProps(propName, value) {
@@ -139,7 +149,7 @@ const ProductForm = ({
           properties.map((property) => (
             <div
               className="flex gap-1 text-primaryDark my-1"
-              key={property._id}
+              key={property.name}
             >
               <p className="whitespace-nowrap">
                 {property.name[0].toUpperCase() + property.name.substring(1)}
@@ -169,7 +179,19 @@ const ProductForm = ({
         >
           {images?.length &&
             images.map((link) => (
-              <div className="w-32 h-32 bg-secondaryBg rounded-lg flex justify-center items-center">
+              <div
+                key={link}
+                className="w-32 h-32 bg-secondaryBg relative rounded-lg flex justify-center items-center"
+              >
+                <button
+                  className="absolute text-secondary top-2 right-2 z-10"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteImage(link);
+                  }}
+                >
+                  <DeleteIcon />
+                </button>
                 <div key={link} className="w-[100px] h-[100px] relative">
                   <Image
                     src={link.toString()}
@@ -178,6 +200,8 @@ const ProductForm = ({
                     style={{
                       objectFit: 'contain',
                     }}
+                    sizes="100px"
+                    priority
                   />
                 </div>
               </div>
@@ -209,6 +233,12 @@ const ProductForm = ({
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
+      {/* Visibility */}
+      <label>Visiblity</label>
+      <select value={hidden} onChange={(e) => setHidden(e.target.value)}>
+        <option value={false}>Shown</option>
+        <option value={true}>Hidden</option>
+      </select>
       {/* Save Button */}
       <button type="submit" className="btn-primary">
         Save

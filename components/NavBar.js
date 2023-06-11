@@ -15,7 +15,7 @@ import LogOutIcon from './icons/LogOutIcon';
 const NavBar = ({ show }) => {
   const router = useRouter();
   const { pathname } = router;
-  const inactiveLink = 'flex gap-1 p-1 pr-4 text-xl';
+  const inactiveLink = 'flex items-center gap-1 p-1 pr-4 text-xl';
   const activeLink =
     inactiveLink + ' bg-primaryBg text-primaryDark rounded-l-lg';
 
@@ -28,7 +28,7 @@ const NavBar = ({ show }) => {
     <aside
       className={`${
         show ? 'left-0' : '-left-full'
-      } text-primaryBg py-8 pl-8 fixed w-full bg-primaryDark min-h-screen md:static md:w-auto transition-all`}
+      } text-secondaryBg py-4 pl-4 fixed w-full bg-primaryDark min-h-screen md:static md:w-auto transition-all`}
     >
       <div className="mb-4 hidden md:block px-1">
         <Logo />
