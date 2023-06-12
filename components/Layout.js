@@ -32,7 +32,7 @@ export default function Layout({ children }) {
   return (
     <div className="bg-primaryDark min-h-screen">
       {/* Navbar for mobile screens */}
-      <div className="md:hidden flex items-center p-4 text-secondaryBg">
+      <div className="md:hidden flex items-center p-4 text-secondaryBg fixed bg-primaryDark w-full">
         <button onClick={() => setShowNavBar(!showNavBar)}>
           <MenuIcon />
         </button>
@@ -44,7 +44,7 @@ export default function Layout({ children }) {
       {/* Navbar for desktop screens */}
       <div className="flex">
         <NavBar show={showNavBar} />
-        <div className="bg-primaryBg flex-grow rounded-md p-4 min-h-screen">
+        <div className="bg-primaryBg flex-grow rounded-md p-4 min-h-screen mt-[60px] md:mt-0">
           {children}
         </div>
       </div>

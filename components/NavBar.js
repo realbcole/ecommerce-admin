@@ -28,7 +28,7 @@ const NavBar = ({ show }) => {
     <aside
       className={`${
         show ? 'left-0' : '-left-full'
-      } text-secondaryBg py-4 pl-4 fixed w-full bg-primaryDark min-h-screen md:static md:w-auto transition-all`}
+      } text-secondaryBg py-4 pl-4 fixed w-full bg-primaryDark min-h-screen md:static md:w-auto top-[60px] transition-all`}
     >
       <div className="mb-4 hidden md:block px-1">
         <Logo />
