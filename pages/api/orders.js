@@ -1,5 +1,5 @@
-import { mongooseConnect } from '@/lib/mongoose';
-import { Order } from '@/models/Order';
+import { mongooseConnect } from '../../lib/mongoose';
+import { Order } from '../../models/Order';
 import { isAdminRequest } from './auth/[...nextauth]';
 
 export default async function handler(req, res) {

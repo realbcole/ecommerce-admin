@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { withSwal } from 'react-sweetalert2';
-import { formatDate } from '@/lib/formatDate';
-import Layout from '@/components/Layout';
-import Spinner from '@/components/Spinner';
+import { formatDate } from '../lib/formatDate';
+import Layout from '../components/Layout';
+import Spinner from '../components/Spinner';
 
 // Admins Page
 // Allows user to add and delete admins

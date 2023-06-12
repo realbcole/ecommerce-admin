@@ -1,7 +1,7 @@
-import { mongooseConnect } from '@/lib/mongoose';
+import { mongooseConnect } from '../../lib/mongoose';
 import { isAdminRequest } from './auth/[...nextauth]';
-import { Settings } from '@/models/Settings';
-import { Product } from '@/models/Product';
+import { Settings } from '../../models/Settings';
+import { Product } from '../../models/Product';
 import mongoose from 'mongoose';
 const stripe = require('stripe')(process.env.STRIPE_SK);
 

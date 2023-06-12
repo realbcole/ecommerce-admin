@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Layout from '@/components/Layout';
-import Spinner from '@/components/Spinner';
+import Layout from '../components/Layout';
+import Spinner from '../components/Spinner';
 
 // Orders Page
 const OrdersPage = () => {

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { withSwal } from 'react-sweetalert2';
-import Layout from '@/components/Layout';
-import Spinner from '@/components/Spinner';
-import EditIcon from '@/components/icons/EditIcon';
-import DeleteIcon from '@/components/icons/DeleteIcon';
+import Layout from '../components/Layout';
+import Spinner from '../components/Spinner';
+import EditIcon from '../components/icons/EditIcon';
+import DeleteIcon from '../components/icons/DeleteIcon';
 
 // Products Page
 const ProductsPage = ({ swal }) => {

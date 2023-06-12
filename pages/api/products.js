@@ -1,5 +1,5 @@
-import { Product } from '@/models/Product';
-import { mongooseConnect } from '@/lib/mongoose';
+import { Product } from '../../models/Product';
+import { mongooseConnect } from '../../lib/mongoose';
 import { isAdminRequest } from './auth/[...nextauth]';
 const stripe = require('stripe')(process.env.STRIPE_SK);
 

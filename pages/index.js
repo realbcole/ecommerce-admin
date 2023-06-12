@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import Layout from '@/components/Layout';
-import Stats from '@/components/Stats';
+import Layout from '../components/Layout';
+import Stats from '../components/Stats';
 
 // Home page header
 // Says hello to the user and shows their name and profile pic on the right side
