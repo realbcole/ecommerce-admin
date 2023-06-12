@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Layout from '@/components/Layout';
-import ProductForm from '@/components/ProductForm';
-import Spinner from '@/components/Spinner';
+import Layout from '../../../components/Layout';
+import ProductForm from '../../../components/ProductForm';
+import Spinner from '../../../components/Spinner';
 
 // Edit Product Page
 const EditProductPage = () => {
