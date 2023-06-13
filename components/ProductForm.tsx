@@ -53,12 +53,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
   }, []);
 
   async function saveProduct(e: FormEvent<HTMLFormElement>) {
+    const processedImages = images.map((image) => image.src);
     e.preventDefault();
+    console.log({ processedImages });
     const data = {
       title,
       description,
       price,
-      images,
+      images: processedImages,
       category,
       properties: productProperties,
       hidden,
@@ -72,6 +74,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     }
     router.push('/products');
   }
+
   async function uploadImages(e: ChangeEvent<HTMLInputElement>) {
     const files: FileList | null = e.target.files;
     if (!files?.length) return;

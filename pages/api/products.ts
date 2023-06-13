@@ -73,7 +73,7 @@ const handler: NextApiHandler = async (req, res) => {
     try {
       if (productDoc.stripePriceId) {
         // add this line
-        stripeProduct: Stripe.ProductsResource = await stripe.products.retrieve(
+        stripeProduct = await stripe.products.retrieve(
           productDoc._id.toString()
         );
       }
@@ -85,7 +85,7 @@ const handler: NextApiHandler = async (req, res) => {
     if (!stripeProduct) {
       try {
         // Try to retrieve the product from Stripe
-        stripeProduct: Stripe.ProductsResource = await stripe.products.retrieve(
+        stripeProduct = await stripe.products.retrieve(
           productDoc._id.toString()
         );
       } catch (e) {

@@ -51,10 +51,14 @@ h2 {
 }
 
 .coupon {
-  @apply max-w-md bg-secondaryBg rounded-md p-2 mb-2 text-primaryDark;
+  @apply max-w-md bg-primaryDark rounded-md p-2 mb-2 text-secondaryBg;
+}
+
+.coupon label {
+  @apply text-secondaryBg;
 }
 
 .coupon input,
 .coupon select {
-  @apply bg-primaryDark text-secondaryBg rounded-md;
+  @apply bg-secondaryBg text-primaryDark rounded-md;
 }
