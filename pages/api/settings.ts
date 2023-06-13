@@ -165,7 +165,9 @@ const handler: NextApiHandler = async (req, res) => {
       const settings: SettingsType = await Settings.findOne({
         name: req.query.name,
       });
-      const coupons: string[] = Object.values(settings.value);
+      const coupons: string[] = Object.values(
+        settings?.value || { coupons: {} }
+      );
       res.json(coupons);
     }
     // Else, return the settings by name

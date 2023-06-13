@@ -55,7 +55,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
   async function saveProduct(e: FormEvent<HTMLFormElement>) {
     const processedImages = images.map((image) => image.src);
     e.preventDefault();
-    console.log({ processedImages });
     const data = {
       title,
       description,
