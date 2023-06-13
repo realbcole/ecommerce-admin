@@ -42,7 +42,7 @@ const handler: NextApiHandler = async (req, res) => {
   // Delete category
   if (req.method === 'DELETE') {
     const id: string | string[] = req.query._id;
-    await Category.deleteOne({ id });
+    await Category.deleteOne({ _id: id });
     res.json(true);
   }
 };
