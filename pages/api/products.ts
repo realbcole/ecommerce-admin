@@ -153,6 +153,9 @@ const handler: NextApiHandler = async (req, res) => {
         ids = req.query.ids;
       }
       res.json(await Product.find({ _id: { $in: ids } }));
+    } else if (req.query.category) {
+      const categoryId: string = req.query.category.toString();
+      res.json(await Product.find({ 'category._id': categoryId }));
     }
     // Else, get all products
     else {

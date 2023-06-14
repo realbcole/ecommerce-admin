@@ -12,6 +12,7 @@ import {
   ProductFormProps,
   PropertyType,
 } from '../types';
+import Link from 'next/link';
 
 // Product Form component
 // For creating and editing products
@@ -42,6 +43,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   );
   const [hidden, setHidden] = useState<boolean>(existingHidden || false);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   const router: NextRouter = useRouter();
 
@@ -52,26 +54,37 @@ const ProductForm: React.FC<ProductFormProps> = ({
     });
   }, []);
 
-  async function saveProduct(e: FormEvent<HTMLFormElement>) {
-    const processedImages = images.map((image) => image.src);
-    e.preventDefault();
-    const data = {
-      title,
-      description,
-      price,
-      images: processedImages,
-      category,
-      properties: productProperties,
-      hidden,
-    };
-    if (_id) {
-      //update product
-      await axios.put('/api/products', { ...data, _id });
+  useEffect(() => {
+    // Form is valid if it has a title, price, and at least one image
+    if (title && price && images.length > 0) {
+      setIsValid(true);
     } else {
-      //create product
-      await axios.post('/api/products', data);
+      setIsValid(false);
     }
-    router.push('/products');
+  }, [title, price, images]);
+
+  async function saveProduct(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (isValid) {
+      const processedImages = images.map((image) => image.src);
+      const data = {
+        title,
+        description,
+        price,
+        images: processedImages,
+        category,
+        properties: productProperties,
+        hidden,
+      };
+      if (_id) {
+        //update product
+        await axios.put('/api/products', { ...data, _id });
+      } else {
+        //create product
+        await axios.post('/api/products', data);
+      }
+      router.push('/products');
+    }
   }
 
   async function uploadImages(e: ChangeEvent<HTMLInputElement>) {
@@ -136,8 +149,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
   return (
     <form onSubmit={saveProduct} className="flex flex-col">
+      <p className="text-primaryDark/50 text-sm">
+        <span className="text-secondary">*</span> indicates a required field.
+      </p>
       {/* Product Name */}
-      <label>Product Name</label>
+      <label>
+        <span className="text-secondary">*</span>Product Name
+      </label>
       <input
         type="text"
         placeholder="Product Name"
@@ -189,7 +207,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
           ))}
       </div>
       {/* Photos */}
-      <label>Photos</label>
+      <label>
+        <span className="text-secondary">*</span>Photos
+      </label>
       <div className="flex flex-wrap gap-2 items-center">
         <ReactSortable
           list={images}
@@ -245,7 +265,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
         onChange={(e) => setDescription(e.target.value)}
       ></textarea>
       {/* Price */}
-      <label>Price (in USD)</label>
+      <label>
+        <span className="text-secondary">*</span>Price (in USD)
+      </label>
       <input
         type="text"
         placeholder="Price"
@@ -253,7 +275,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
         onChange={(e) => setPrice(e.target.value)}
       />
       {/* Visibility */}
-      <label>Visiblity</label>
+      <label>
+        <span className="text-secondary">*</span>Visiblity
+      </label>
       <select
         value={hidden ? 'true' : 'false'}
         onChange={(e) => setHidden(e.target.value === 'true')}
@@ -261,11 +285,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
         <option value={'false'}>Shown</option>
         <option value={'true'}>Hidden</option>
       </select>
-
-      {/* Save Button */}
-      <button type="submit" className="btn-primary">
-        Save
-      </button>
+      {!isValid && (
+        <p className="text-secondary font-semibold">Missing required fields.</p>
+      )}
+      {/* Save/Cancel Buttons */}
+      <div className="flex flex-wrap gap-1">
+        <button type="submit" className="btn-primary w-24">
+          Save
+        </button>
+        <Link href="/products" className="btn-default text-center w-24">
+          Cancel
+        </Link>
+      </div>
     </form>
   );
 };

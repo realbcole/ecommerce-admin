@@ -16,6 +16,10 @@ import {
 const CategoriesPage: React.FC<CategoriesPageProps> = ({ swal }) => {
   const [name, setName] = useState<string>('');
   const [categories, setCategories] = useState<CategoryWithParentType[]>([]);
+  const [productCount, setProductCount] = useState<{
+    _id: string;
+    productCount: number;
+  }>({ _id: '', productCount: 0 });
   const [parentCategory, setParentCategory] = useState<string>('');
   const [editedCategory, setEditedCategory] =
     useState<CategoryWithParentType>(null);
@@ -24,15 +28,44 @@ const CategoriesPage: React.FC<CategoriesPageProps> = ({ swal }) => {
 
   // On start, load categories
   useEffect(() => {
-    fetchCategories();
+    fetchCategories().then(() => setLoading(false));
   }, []);
 
   async function fetchCategories() {
     setLoading(true);
-    await axios.get('/api/categories').then((result) => {
-      setCategories(result.data);
-      setLoading(false);
+    let categoriesData = [];
+    try {
+      const result = await axios.get('/api/categories');
+      categoriesData = result.data;
+      setCategories(categoriesData);
+    } catch (err) {
+      console.error('Error while fetching categories', err);
+    }
+
+    // Map categories to an array of promises
+    const productCountPromises = categoriesData.map((category) =>
+      axios.get(`/api/products?category=${category._id}`)
+    );
+
+    // Use Promise.all to wait for all requests
+    let productCountResponses = [];
+    try {
+      productCountResponses = await Promise.all(productCountPromises);
+    } catch (err) {
+      console.error('Error while fetching product counts', err);
+    }
+
+    // Now you can safely set productCount state
+    const newProductCount: {
+      _id: string;
+      productCount: number;
+    } = { _id: '', productCount: 0 };
+    productCountResponses.forEach((response, index) => {
+      newProductCount[categoriesData[index]._id] = response.data.length;
     });
+    setProductCount(newProductCount);
+    console.log({ newProductCount });
+    setLoading(false);
   }
 
   async function saveCategory(e: React.FormEvent<HTMLFormElement>) {
@@ -153,6 +186,7 @@ const CategoriesPage: React.FC<CategoriesPageProps> = ({ swal }) => {
         </div>
         {/* Properties input */}
         <div className="mb-4">
+          <label className="block">Properties</label>
           {properties.length > 0 &&
             properties.map((property, index) => (
               <div className="flex gap-1 mb-2" key={index}>
@@ -183,7 +217,6 @@ const CategoriesPage: React.FC<CategoriesPageProps> = ({ swal }) => {
                 </button>
               </div>
             ))}
-          <label className="block">Properties</label>
           {name ? (
             <button
               type="button"
@@ -233,6 +266,7 @@ const CategoriesPage: React.FC<CategoriesPageProps> = ({ swal }) => {
                 <tr className="text-center">
                   <td>Category Name</td>
                   <td>Parent Category</td>
+                  <td>Products</td>
                   <td></td>
                 </tr>
               </thead>
@@ -245,6 +279,7 @@ const CategoriesPage: React.FC<CategoriesPageProps> = ({ swal }) => {
                     >
                       <td>{category.name}</td>
                       <td>{category?.parent?.name}</td>
+                      <td>{productCount[category._id] || 0}</td>
                       <td className="flex justify-end">
                         <button
                           onClick={() => editCategory(category)}

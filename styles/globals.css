@@ -47,7 +47,7 @@ h2 {
 }
 
 .btn-default {
-  @apply bg-primaryDark text-secondaryBg px-4 py-2 rounded-lg;
+  @apply bg-primaryDark text-secondaryBg px-2 py-1 rounded-lg;
 }
 
 .coupon {
