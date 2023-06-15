@@ -1,38 +1,116 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h3 align="center">Custom Ecommerce Admin Website</h3>
+<img src="public/screenshots/home.PNG" alt="Home Screenshot">
 
-## Getting Started
+---
 
-First, run the development server:
+<p align="center"> Custom Full Stack Ecommerce Admin Website
+    <br> 
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## NOTE
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Due to this app having access to the data displayed in my ecommerce front project (https://github.com/realbcole/ecommerce-front), there is no live demo. Please refer to screenshots and code to learn more about the project.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## 📝 Table of Contents
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- [About](#about)
+- [Screenshots & Features](#screenshots)
+- [Built Using](#built_using)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 🧐 About <a name = "about"></a>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Full Stack Ecommerce Admin Website, built from scratch, fully functional, fully responsive, connected to my ecommerce front project (https://github.com/realbcole/ecommerce-front)
 
-## Learn More
+## Screenshots & Features <a name = "screenshots"></a>
 
-To learn more about Next.js, take a look at the following resources:
+<img src="public/screenshots/home.PNG" alt="Home Screenshot">
+<h3>Features</h3>
+<ul>
+<li>Shows order data</li>
+<li>Shows revenue data</li>
+</ul>
+<hr>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img src="public/screenshots/products.PNG" alt="Products Page Screenshot">
+<h3>Features</h3>
+<ul>
+<li>View all products</li>
+<li>Create and edit products</li>
+<li>Delete products</li>
+</ul>
+<hr>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<img src="public/screenshots/product.PNG" alt="Product Form Screenshot">
+<h3>Features</h3>
+<ul>
+<li>Create/Edit product details</li>
+<li>Add/Remove/Reorder images (uploaded to AWS)</li>
+<li>Edit properties based on category</li>
+</ul>
+<hr>
 
-## Deploy on Vercel
+<img src="public/screenshots/productDelete.PNG" alt="Product Delete Screenshot">
+<h3>Features</h3>
+<ul>
+<li>Delete product</li>
+</ul>
+<hr>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<img src="public/screenshots/categories.PNG" alt="Product Page Screenshot">
+<h3>Features</h3>
+<ul>
+<li>View all categories</li>
+<li>View number of products in each category</li>
+<li>Create/Edit categories</li>
+</ul>
+<hr>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img src="public/screenshots/category.PNG" alt="Categories Page Screenshot">
+<h3>Features</h3>
+<ul>
+<li>Create/Edit category</li>
+<li>Add/remove properties</li>
+</ul>
+<hr>
+
+<img src="public/screenshots/orders.PNG" alt="Category Page Screenshot">
+<h3>Features</h3>
+<ul>
+<li>View all orders</li>
+<li>See if order was paid or not</li>
+</ul>
+<hr>
+
+<img src="public/screenshots/admins.PNG" alt="Account Page Screenshot">
+<h3>Features</h3>
+<ul>
+<li>Add/Remove admins</li>
+<li>Admins have access to login to this website</li>
+</ul>
+<hr>
+
+<img src="public/screenshots/settings.PNG" alt="Cart Screenshot">
+<h3>Features</h3>
+<ul>
+<li>Set shop name, will change name from "Ecommerce" on ecommerce front to whatever is set</li>
+<li>Set featured product</li>
+<li>Add/Remove/Edit Coupons <ul><li>Automatically adds/updates/removes coupons in stripe based on these settings</li><li>Coupons are immediately usable on ecommerce front</li></ul></li>
+<li>Set shipping fee</li>
+</ul>
+<hr>
+
+## ⛏️ Built Using <a name = "built_using"></a>
+
+- [React](https://react.dev/) - Web framework
+- [NextJS](https://nextjs.org/) - Development framework
+- [TypeScript](https://www.typescriptlang.org/) - Language
+- [TailwindCSS](https://tailwindcss.com/) - Styling
+- [React-Sweetalert2](https://sweetalert2.github.io/recipe-gallery/sweetalert2-react.html) - Alerts
+- [Next-Auth](https://next-auth.js.org/) - User authentication
+- [Stripe](https://stripe.com/docs) - Financial Services
+- [AWS](https://docs.aws.amazon.com/) - Cloud services (for images)
+- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Axios](https://axios-http.com/docs/intro) - Backend HTTP Client
+- [Mongoose](https://mongoosejs.com/) - Data Modeling
+- [MongoDB](https://www.mongodb.com/) - Database
+- [Vercel](https://vercel.com/docs) - Deployment

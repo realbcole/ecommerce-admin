@@ -252,11 +252,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ swal }) => {
           </select>
           {/* Coupons */}
           <div className="">
-            <label>Coupons (Please add one at a time)</label>
+            <label>Coupons</label>
             {coupons &&
               typeof coupons === 'object' &&
               Object.keys(coupons).map((couponName) => (
-                <div key={couponName}>
+                <div key={coupons[couponName].id}>
                   <Coupon
                     coupon={coupons[couponName]}
                     couponName={couponName}
@@ -337,7 +337,7 @@ const Coupon: React.FC<CouponComponentProps> = ({
         </label>
         <input
           type="text"
-          value={couponName}
+          value={coupon.code}
           onChange={(e) =>
             handleCouponChange(coupon.id, {
               code: e.target.value.toUpperCase(),
