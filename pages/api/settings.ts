@@ -168,7 +168,8 @@ const handler: NextApiHandler = async (req, res) => {
       const coupons: string[] = Object.values(
         settings?.value || { coupons: {} }
       );
-      res.json(coupons);
+      console.log(JSON.parse(JSON.stringify(coupons)));
+      res.json(JSON.parse(JSON.stringify(coupons)));
     }
     // Else, return the settings by name
     else {

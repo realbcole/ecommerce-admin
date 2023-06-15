@@ -53,7 +53,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ swal }) => {
     });
     // Get coupons setting
     await axios.get(`/api/settings?name=coupons`).then((response) => {
-      const couponsArray: CouponType[] = response?.data?.value || [];
+      const couponsArray: CouponType[] = response.data || [];
+      console.log({ couponsArray });
       const coupons = {};
       const couponTypes = {};
       const couponApplyTo = {};
@@ -61,7 +62,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ swal }) => {
       const couponCategory = {};
       // Convert coupons array to object
       for (const coupon of couponsArray) {
-        const type = Object.keys(coupon.details)[0];
+        const type = coupon.amountOff ? 'amountOff' : 'percentOff';
         coupons[coupon.code] = {
           type,
           applyTo: coupon.applyTo || 'all',
@@ -215,6 +216,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ swal }) => {
       return newCouponTypes;
     });
   }
+  console.log({ coupons });
 
   return (
     <Layout>
@@ -223,7 +225,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ swal }) => {
         <span className="text-secondary">*</span> indicates a required field.
       </p>
       {isLoading ? (
-        <Spinner className="mt-12" />
+        <Spinner className="!mt-24" />
       ) : (
         <>
           <label>Shop Name</label>
@@ -335,7 +337,7 @@ const Coupon: React.FC<CouponComponentProps> = ({
         </label>
         <input
           type="text"
-          value={coupon.code.toUpperCase()}
+          value={couponName}
           onChange={(e) =>
             handleCouponChange(coupon.id, {
               code: e.target.value.toUpperCase(),
